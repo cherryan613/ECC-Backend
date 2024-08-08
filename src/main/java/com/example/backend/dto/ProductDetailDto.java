@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter // 각 필드 값을 설정할 수 있는 setter 메서드 자동 생성
 @ToString // 모든 필드를 출력할 수 있는 toString 메서드 자동 생성
 
-public class ProductDetailDto {
+public class ProductDetailDto { // 상품 상세 페이지(모든 정보)
 
     private Long product_code;
     private String product_name;
