@@ -1,0 +1,26 @@
+package com.example.backend.repository;
+
+import com.example.backend.entity.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long>, CrudRepository<Product, Long> {
+    @Query(value = "SELECT * FROM products WHERE product_code = :product_code", nativeQuery = true)
+    List<Product> findByProductCode(Long product_code);
+
+    @Query(value = "SELECT * FROM products WHERE product_type = :product_type", nativeQuery = true)
+    List<Product> findByProductType(String product_type);
+
+    @Query(value="SELECT * FROM products WHERE bank_id= :bank_id", nativeQuery = true)
+    List<Product> findByBankId(int bank_id);
+
+    @Override
+    ArrayList<Product> findAll();
+
+}
