@@ -1,5 +1,6 @@
 package com.example.backend.apiController;
 
+import com.example.backend.dto.ResponseDto;
 import com.example.backend.dto.ScrapDto;
 import com.example.backend.service.ScrapService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,37 +18,60 @@ public class ScrapApiController {
 
     // 유저에 대한 모든 스크랩
     @GetMapping("/api/users/{user_code}/scraps")
-    public ResponseEntity<List<ScrapDto>> scraps(@PathVariable Long user_code) {
-        // 서비스에 위임
-        List<ScrapDto> dtos = scrapService.scraps(user_code);
-        // 결과 응답
-        return ResponseEntity.status(HttpStatus.OK).body(dtos);
+    public ResponseEntity<?> scraps(@PathVariable Long user_code) {
+        try {
+            // 서비스에 위임
+            List<ScrapDto> dtos = scrapService.scraps(user_code);
+            // 결과 응답
+            return ResponseEntity.status(HttpStatus.OK).body(dtos);
+        }catch(Exception e){
+            String errorMessage = "스크랩 목록 조회에 실패하였습니다: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }
     }
 
     // 스크랩 저장
     @PostMapping("/api/users/{user_code}/scraps")
-    public ResponseEntity<ScrapDto> save(@PathVariable Long user_code, @RequestBody ScrapDto dto) {
-        // 서비스에 위임
-        ScrapDto savedDto = scrapService.save(user_code, dto);
-        // 결과 응답
-        return ResponseEntity.status(HttpStatus.OK).body(savedDto);
+    public ResponseEntity<?> save(@PathVariable Long user_code, @RequestBody ScrapDto dto) {
+        try {
+            // 서비스에 위임
+            ScrapDto savedDto = scrapService.save(user_code, dto);
+            // 결과 응답
+            return ResponseEntity.status(HttpStatus.OK).body(savedDto);
+        }catch(Exception e){
+            ResponseDto responseDto=new ResponseDto();
+            responseDto.setMsg(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
+        }
     }
 
     // 스크랩 수정
     @PatchMapping("/api/scraps/{scrap_code}")
-    public ResponseEntity<ScrapDto> update(@PathVariable Long scrap_code, @RequestBody ScrapDto dto) {
-        // 서비스에 위임
-        ScrapDto updatedDto = scrapService.update(scrap_code, dto);
-        // 결과 응답
-        return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
+    public ResponseEntity<?> update(@PathVariable Long scrap_code, @RequestBody ScrapDto dto) {
+        try {
+            // 서비스에 위임
+            ScrapDto updatedDto = scrapService.update(scrap_code, dto);
+            // 결과 응답
+            return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
+        }catch(Exception e){
+            ResponseDto responseDto=new ResponseDto();
+            responseDto.setMsg(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
+        }
     }
 
     // 스크랩 삭제
     @DeleteMapping("/api/scraps/{scrap_code}")
-    public ResponseEntity<ScrapDto> delete(@PathVariable Long scrap_code) {
-        // 서비스에 위임
-        ScrapDto deletedDto = scrapService.delete(scrap_code);
-        // 결과 응답
-        return ResponseEntity.status(HttpStatus.OK).body(deletedDto);
+    public ResponseEntity<?> delete(@PathVariable Long scrap_code) {
+        try {
+            // 서비스에 위임
+            ScrapDto deletedDto = scrapService.delete(scrap_code);
+            // 결과 응답
+            return ResponseEntity.status(HttpStatus.OK).body(deletedDto);
+        }catch(Exception e){
+            ResponseDto responseDto=new ResponseDto();
+            responseDto.setMsg(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
+        }
     }
 }
