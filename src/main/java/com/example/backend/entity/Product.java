@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @ToString // 모든 필드를 출력할 수 있는 toString 메서드 자동 생성
 @AllArgsConstructor // 모든 필드를 매개변수로 갖는 생성자 자동 생성
 @NoArgsConstructor // 매개변수가 아예 없는 기본 생성자 자동 생성
+
 public class Product {
 
     @Id
@@ -70,7 +71,7 @@ public class Product {
     public static Product createProduct(ProductDto productDto) {
         // 예외 발생
         if(productDto.getProduct_code() != null)
-            throw new IllegalArgumentException("상품 생성 실패! 상품의 code가 없어야 합니다.");
+            throw new IllegalArgumentException("상품 생성 실패! 상품 code는 중복될 수 없습니다.");
 
         return new Product(
                 productDto.getProduct_code(),
@@ -94,9 +95,8 @@ public class Product {
 
     public void patch(ProductDto productDto) {
         // 예외 발생
-        System.out.println("this.product_code: "+this.product_code+", productDto.getProduct_code(): "+productDto.getProduct_code());
         if (this.product_code != productDto.getProduct_code())
-            throw new IllegalArgumentException("상품 수정 실패! 잘못된 code가 입력됐습니다.");
+            throw new IllegalArgumentException("상품 수정 실패! 잘못된 상품 code가 입력됐습니다.");
         // 객체 갱신
         if (productDto.getProduct_name() != null) { // 수정할 name이 있다면
             this.product_name = productDto.getProduct_name();
@@ -114,17 +114,45 @@ public class Product {
             this.product_interest_top_rate = productDto.getProduct_interest_top_rate();
             this.product_last_update = productDto.getProduct_last_update();
         }
-        if (productDto.getProduct_interest_top_rate() != null) { // 수정할 interest top rate이 있다면
-            this.product_interest_top_rate = productDto.getProduct_interest_top_rate();
+        if (productDto.getProduct_bank() != null) { // 수정할 bank가 있다면
+            this.product_bank = productDto.getProduct_bank();
             this.product_last_update = productDto.getProduct_last_update();
         }
-        if (productDto.getProduct_interest_top_rate() != null){ // 수정할 interest top rate이 있다면
-            this.product_interest_top_rate=productDto.getProduct_interest_top_rate();
+        if (productDto.getProduct_age() != null){ // 수정할 age가 있다면
+           this.product_age=productDto.getProduct_age();
+           this.product_last_update=productDto.getProduct_last_update();
+        }
+        if (productDto.getProduct_amount() != null){ // 수정할 amount가 있다면
+            this.product_amount=productDto.getProduct_amount();
             this.product_last_update=productDto.getProduct_last_update();
         }
-        if (productDto.getProduct_interest_top_rate() != null) { // 수정할 interest top rate이 있다면
-            this.product_interest_top_rate = productDto.getProduct_interest_top_rate();
-            this.product_last_update = productDto.getProduct_last_update();
+        if (productDto.getProduct_url() != null){ // 수정할 url이 있다면
+            this.product_url=productDto.getProduct_url();
+            this.product_last_update=productDto.getProduct_last_update();
+        }
+        if (productDto.getProduct_term() != null){ // 수정할 term이 있다면
+            this.product_term=productDto.getProduct_term();
+            this.product_last_update=productDto.getProduct_last_update();
+        }
+        if (productDto.getProduct_benefit() != null){ // 수정할 benefit이 있다면
+            this.product_benefit=productDto.getProduct_benefit();
+            this.product_last_update=productDto.getProduct_last_update();
+        }
+        if (productDto.getProduct_description() != null){ // 수정할 description이 있다면
+            this.product_description = productDto.getProduct_description();
+            this.product_last_update=productDto.getProduct_last_update();
+        }
+        if (productDto.getFeat1() != null){ // 수정할 feat1이 있다면
+            this.feat1 = productDto.getFeat1();
+            this.product_last_update=productDto.getProduct_last_update();
+        }
+        if (productDto.getFeat2() != null){ // 수정할 feat2가 있다면
+            this.feat2 = productDto.getFeat2();
+            this.product_last_update=productDto.getProduct_last_update();
+        }
+        if (productDto.getFeat3() != null){ // 수정할 feat3이 있다면
+            this.feat3 = productDto.getFeat3();
+            this.product_last_update=productDto.getProduct_last_update();
         }
     }
 }
