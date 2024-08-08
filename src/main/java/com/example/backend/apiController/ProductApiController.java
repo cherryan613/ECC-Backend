@@ -20,66 +20,60 @@ public class ProductApiController {
 
     // 상품 상세 페이지
     @GetMapping("/product/{product_code}")
-    public ResponseEntity<?> getProductByCode(@PathVariable Long product_code) {
+    public ResponseEntity<ResponseDto<?>> getProductByCode(@PathVariable Long product_code) {
         try {
             List<ProductDetailDto> dtos = productService.productsByCode(product_code);
-            return ResponseEntity.status(HttpStatus.OK).body(dtos);
-        }catch(Exception e){
-            String errorMessage = "상품 조회에 실패하였습니다: " + e.getMessage();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+            return ResponseEntity.ok(new ResponseDto<>("상품을 성공적으로 조회하였습니다.", dtos));
+        } catch (Exception e) {
+            ResponseDto<String> responseDto = new ResponseDto<>(e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
         }
     }
 
     // 상품 비교 페이지
     @GetMapping("/product/type/{type}")
-    public ResponseEntity<?> getProductByType(@PathVariable String type) {
+    public ResponseEntity<ResponseDto<?>> getProductByType(@PathVariable String type) {
         try {
             List<ProductTypeDto> dtos = productService.productByType(type);
-            return ResponseEntity.status(HttpStatus.OK).body(dtos);
-        }catch(Exception e){
-            String errorMessage = "상품 목록 조회에 실패하였습니다: " + e.getMessage();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+            return ResponseEntity.ok(new ResponseDto<>("상품을 성공적으로 조회하였습니다.", dtos));
+        } catch (Exception e) {
+            ResponseDto<String> responseDto = new ResponseDto<>(e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
         }
     }
 
     // 상품 등록
     @PostMapping("/product")
-    public ResponseEntity<?> create(@RequestBody ProductDto productDto){
+    public ResponseEntity<ResponseDto<?>> create(@RequestBody ProductDto productDto){
         try {
             ProductDto dtos = productService.create(productDto);
-            dtos.setMsg("상품을 성공적으로 등록하였습니다.");
-            return ResponseEntity.status(HttpStatus.OK).body(dtos);
-        }catch(Exception e){
-            ResponseDto responseDto=new ResponseDto();
-            responseDto.setMsg(e.getMessage());
+            return ResponseEntity.ok(new ResponseDto<>("상품을 성공적으로 등록하였습니다.", dtos));
+        } catch (Exception e) {
+            ResponseDto<String> responseDto = new ResponseDto<>(e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
         }
     }
 
     // 상품 수정
     @PatchMapping("/product/{product_code}")
-    public ResponseEntity<?> update(@PathVariable Long product_code, @RequestBody ProductDto productDto){
+    public ResponseEntity<ResponseDto<?>> update(@PathVariable Long product_code, @RequestBody ProductDto productDto){
         try{
             ProductDto dtos=productService.update(product_code, productDto);
-            dtos.setMsg("상품을 성공적으로 수정하였습니다.");
-            return ResponseEntity.status(HttpStatus.OK).body(dtos);
-        }catch(Exception e){
-            ResponseDto responseDto=new ResponseDto();
-            responseDto.setMsg(e.getMessage());
+            return ResponseEntity.ok(new ResponseDto<>("상품을 성공적으로 수정하였습니다.", dtos));
+        } catch (Exception e) {
+            ResponseDto<String> responseDto = new ResponseDto<>(e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
         }
     }
 
     // 상품 삭제
     @DeleteMapping("/product/{product_code}")
-    public ResponseEntity<?> delete(@PathVariable Long product_code){
+    public ResponseEntity<ResponseDto<?>> delete(@PathVariable Long product_code){
         try {
             ProductDto dtos = productService.delete(product_code);
-            dtos.setMsg("상품을 성공적으로 삭제하였습니다.");
-            return ResponseEntity.status(HttpStatus.OK).body(dtos);
-        }catch(Exception e){
-            ResponseDto responseDto=new ResponseDto();
-            responseDto.setMsg(e.getMessage());
+            return ResponseEntity.ok(new ResponseDto<>("상품을 성공적으로 삭제하였습니다.", dtos));
+        } catch (Exception e) {
+            ResponseDto<String> responseDto = new ResponseDto<>(e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
         }
     }

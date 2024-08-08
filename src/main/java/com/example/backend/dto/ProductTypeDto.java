@@ -11,18 +11,10 @@ import lombok.*;
 
 public class ProductTypeDto { // 상품 비교 페이지
 
-    private String msg;
     private String product_name;
     private String product_feat1;
     private String product_feat2;
     private String product_feat3;
-
-    public ProductTypeDto(String product_name, String product_feat1, String product_feat2, String product_feat3){
-        this.product_name=product_name;
-        this.product_feat1=product_feat1;
-        this.product_feat2=product_feat2;
-        this.product_feat3=product_feat3;
-    }
 
     public static ProductTypeDto createProductDto(Product product){
         return new ProductTypeDto(

@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 
 public class ProductDetailDto { // 상품 상세 페이지(모든 정보)
 
-    private String msg;
     private Long product_code;
     private String product_name;
     private String product_type;
@@ -28,25 +27,6 @@ public class ProductDetailDto { // 상품 상세 페이지(모든 정보)
     private String product_url;
     private String product_description;
     private LocalDateTime product_last_update;
-
-    public ProductDetailDto(Long product_code, String product_name, String product_type, BigDecimal product_interest_rate,
-                      BigDecimal product_interest_top_rate, String product_bank, String product_amount,
-                      String product_age, String product_term, String product_benefit, String product_url,
-                      String product_description, LocalDateTime product_last_update) {
-        this.product_code = product_code;
-        this.product_name = product_name;
-        this.product_type = product_type;
-        this.product_interest_rate = product_interest_rate;
-        this.product_interest_top_rate = product_interest_top_rate;
-        this.product_bank = product_bank;
-        this.product_amount = product_amount;
-        this.product_age = product_age;
-        this.product_term = product_term;
-        this.product_benefit = product_benefit;
-        this.product_url = product_url;
-        this.product_description = product_description;
-        this.product_last_update = product_last_update;
-    }
 
     public static ProductDetailDto createProductDto(Product product){
         return new ProductDetailDto(
