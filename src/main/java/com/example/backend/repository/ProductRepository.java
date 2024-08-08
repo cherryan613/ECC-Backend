@@ -17,9 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, CrudRep
     @Query(value = "SELECT * FROM products WHERE product_type = :product_type", nativeQuery = true)
     List<Product> findByProductType(String product_type);
 
-    @Query(value="SELECT * FROM products WHERE bank_id= :bank_id", nativeQuery = true)
-    List<Product> findByBankId(int bank_id);
-
     @Override
     ArrayList<Product> findAll();
 
