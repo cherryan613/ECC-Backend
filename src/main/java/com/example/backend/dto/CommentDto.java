@@ -13,11 +13,20 @@ import java.time.LocalDateTime;
 
 public class CommentDto {
 
+    private String msg;
     private Long comment_code;
     private String comment_content;
     private LocalDateTime comment_write_date_time;
     private Long product_code;
     private Long user_code;
+
+    public CommentDto(Long comment_code, String comment_content, LocalDateTime comment_write_date_time, Long product_code, Long user_code){
+        this.comment_code=comment_code;
+        this.comment_content=comment_content;
+        this.comment_write_date_time=comment_write_date_time;
+        this.product_code=product_code;
+        this.user_code=user_code;
+    }
 
     public static CommentDto createCommentDto(Comment comment){
         return new CommentDto(

@@ -13,11 +13,20 @@ import java.time.LocalDateTime;
 
 public class ScrapDto {
 
+    private String msg;
     private Long scrap_code;
     private LocalDateTime scrap_time;
     private String scrap_memo;
     private Long product_code;
     private Long user_code;
+
+    public ScrapDto(Long scrap_code, LocalDateTime scrap_time, String scrap_memo, Long product_code, Long user_code) {
+        this.scrap_code = scrap_code;
+        this.scrap_time = scrap_time;
+        this.scrap_memo = scrap_memo;
+        this.product_code = product_code;
+        this.user_code = user_code;
+    }
 
     public static ScrapDto createScrapDto(Scrap scrap){
         return new ScrapDto(

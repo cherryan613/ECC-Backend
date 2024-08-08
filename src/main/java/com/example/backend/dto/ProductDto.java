@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 
 public class ProductDto {
 
+    private String msg;
     private Long product_code;
     private String product_name;
     private String product_type;
@@ -30,6 +31,28 @@ public class ProductDto {
     private String feat1;
     private String feat2;
     private String feat3;
+
+    public ProductDto(Long product_code, String product_name, String product_type, BigDecimal product_interest_rate,
+                      BigDecimal product_interest_top_rate, String product_bank, String product_amount,
+                      String product_age, String product_term, String product_benefit, String product_url,
+                      String product_description, LocalDateTime product_last_update, String feat1, String feat2, String feat3) {
+        this.product_code = product_code;
+        this.product_name = product_name;
+        this.product_type = product_type;
+        this.product_interest_rate = product_interest_rate;
+        this.product_interest_top_rate = product_interest_top_rate;
+        this.product_bank = product_bank;
+        this.product_amount = product_amount;
+        this.product_age = product_age;
+        this.product_term = product_term;
+        this.product_benefit = product_benefit;
+        this.product_url = product_url;
+        this.product_description = product_description;
+        this.product_last_update = product_last_update;
+        this.feat1 = feat1;
+        this.feat2 = feat2;
+        this.feat3 = feat3;
+    }
 
     public static ProductDto createProductDto(Product product){
         return new ProductDto(
