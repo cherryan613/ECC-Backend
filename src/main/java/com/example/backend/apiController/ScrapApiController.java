@@ -36,6 +36,7 @@ public class ScrapApiController {
         try {
             // 서비스에 위임
             ScrapDto savedDto = scrapService.save(user_code, dto);
+            savedDto.setMsg("스크랩을 성공적으로 저장하였습니다.");
             // 결과 응답
             return ResponseEntity.status(HttpStatus.OK).body(savedDto);
         }catch(Exception e){
@@ -51,6 +52,7 @@ public class ScrapApiController {
         try {
             // 서비스에 위임
             ScrapDto updatedDto = scrapService.update(scrap_code, dto);
+            updatedDto.setMsg("스크랩을 성공적으로 수정하였습니다.");
             // 결과 응답
             return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
         }catch(Exception e){
@@ -66,6 +68,7 @@ public class ScrapApiController {
         try {
             // 서비스에 위임
             ScrapDto deletedDto = scrapService.delete(scrap_code);
+            deletedDto.setMsg("스크랩을 성공적으로 삭제하였습니다.");
             // 결과 응답
             return ResponseEntity.status(HttpStatus.OK).body(deletedDto);
         }catch(Exception e){

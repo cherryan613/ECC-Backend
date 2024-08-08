@@ -42,11 +42,12 @@ public class ProductApiController {
         }
     }
 
-    // 상품 추가
+    // 상품 등록
     @PostMapping("/product")
     public ResponseEntity<?> create(@RequestBody ProductDto productDto){
         try {
             ProductDto dtos = productService.create(productDto);
+            dtos.setMsg("상품을 성공적으로 등록하였습니다.");
             return ResponseEntity.status(HttpStatus.OK).body(dtos);
         }catch(Exception e){
             ResponseDto responseDto=new ResponseDto();
@@ -59,8 +60,9 @@ public class ProductApiController {
     @PatchMapping("/product/{product_code}")
     public ResponseEntity<?> update(@PathVariable Long product_code, @RequestBody ProductDto productDto){
         try{
-        ProductDto dtos=productService.update(product_code, productDto);
-        return ResponseEntity.status(HttpStatus.OK).body(dtos);
+            ProductDto dtos=productService.update(product_code, productDto);
+            dtos.setMsg("상품을 성공적으로 수정하였습니다.");
+            return ResponseEntity.status(HttpStatus.OK).body(dtos);
         }catch(Exception e){
             ResponseDto responseDto=new ResponseDto();
             responseDto.setMsg(e.getMessage());
@@ -73,6 +75,7 @@ public class ProductApiController {
     public ResponseEntity<?> delete(@PathVariable Long product_code){
         try {
             ProductDto dtos = productService.delete(product_code);
+            dtos.setMsg("상품을 성공적으로 삭제하였습니다.");
             return ResponseEntity.status(HttpStatus.OK).body(dtos);
         }catch(Exception e){
             ResponseDto responseDto=new ResponseDto();
