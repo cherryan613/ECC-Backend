@@ -40,11 +40,11 @@ public class Comment {
     public static Comment createComment(CommentDto commentDto, Product product, User user) {
         // 예외 발생
         if (commentDto.getComment_code() != null)
-            throw new IllegalArgumentException("댓글 생성 실패! 댓글의 id가 없어야 합니다.");
+            throw new IllegalArgumentException("댓글 생성 실패! 댓글 code는 중복될 수 없습니다.");
         if (commentDto.getProduct_code() != product.getProduct_code())
-            throw new IllegalArgumentException("댓글 생성 실패! 상품의 id가 잘못됐습니다.");
+            throw new IllegalArgumentException("댓글 생성 실패! 상품 code가 잘못됐습니다.");
         if(commentDto.getUser_code() != user.getUser_code())
-            throw  new IllegalArgumentException("댓글 생성 실패! 사용자의 code가 잘못됐습니다.");
+            throw  new IllegalArgumentException("댓글 생성 실패! 사용자 code가 잘못됐습니다.");
 
         // 엔티티 생성 및 반환
         return new Comment(
@@ -59,10 +59,11 @@ public class Comment {
     public void patch(CommentDto commentDto) {
         // 예외 발생
         if (this.comment_code != commentDto.getComment_code())
-            throw new IllegalArgumentException("댓글 수정 실패! 잘못된 id가 입력됐습니다.");
+            throw new IllegalArgumentException("댓글 수정 실패! 잘못된 댓글 code가 입력됐습니다.");
         // 객체 갱신
-        if (commentDto.getComment_content() != null) // 수정할 본문 데이터가 있다면
+        if (commentDto.getComment_content() != null) { // 수정할 본문 데이터가 있다면
             this.comment_content = commentDto.getComment_content(); // 내용 반영
-        this.comment_write_date_time=commentDto.getComment_write_date_time();
+            this.comment_write_date_time = commentDto.getComment_write_date_time(); // 수정된 시각 반영
+        }
     }
 }

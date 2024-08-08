@@ -42,12 +42,11 @@ public class Scrap {
     public static Scrap createScrap(ScrapDto scrapDto, Product product, User user) {
         // 예외 발생
         if(scrapDto.getScrap_code() != null)
-            throw new IllegalArgumentException("스크랩 생성 실패! 스크랩의 code가 없어야 합니다.");
-        System.out.println("scrapDto.getProduct_code(): "+scrapDto.getProduct_code()+"product.getProduct_code()"+product.getProduct_code());
+            throw new IllegalArgumentException("스크랩 생성 실패! 스크랩 code는 중복될 수 없습니다.");
         if(scrapDto.getProduct_code() != product.getProduct_code())
-            throw new IllegalArgumentException("스크랩 생성 실패! 상품의 code가 잘못됐습니다.");
+            throw new IllegalArgumentException("스크랩 생성 실패! 상품 code가 잘못됐습니다.");
         if(scrapDto.getUser_code() != user.getUser_code())
-            throw new IllegalArgumentException("스크랩 생성 실패! 사용자의 code가 잘못됐습니다.");
+            throw new IllegalArgumentException("스크랩 생성 실패! 사용자 code가 잘못됐습니다.");
 
         return new Scrap(
                 scrapDto.getScrap_code(),
@@ -61,11 +60,12 @@ public class Scrap {
     public void patch(ScrapDto scrapDto) {
         // 예외 발생
         if (this.scrap_code != scrapDto.getScrap_code())
-            throw new IllegalArgumentException("스크랩 수정 실패! 잘못된 code가 입력됐습니다.");
+            throw new IllegalArgumentException("스크랩 수정 실패! 잘못된 스크랩 code가 입력됐습니다.");
         // 객체 갱신
-        if (scrapDto.getScrap_memo() != null) // 수정할 본문 데이터가 있다면
+        if (scrapDto.getScrap_memo() != null) { // 수정할 본문 데이터가 있다면
             this.scrap_memo = scrapDto.getScrap_memo(); // 내용 반영
-        this.scrap_time=scrapDto.getScrap_time();
+            this.scrap_time = scrapDto.getScrap_time();
+        }
     }
 
 }
