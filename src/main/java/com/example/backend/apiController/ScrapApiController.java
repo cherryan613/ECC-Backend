@@ -15,6 +15,7 @@ public class ScrapApiController {
     @Autowired
     ScrapService scrapService;
 
+    // 유저에 대한 모든 스크랩
     @GetMapping("/api/users/{user_code}/scraps")
     public ResponseEntity<List<ScrapDto>> scraps(@PathVariable Long user_code) {
         // 서비스에 위임

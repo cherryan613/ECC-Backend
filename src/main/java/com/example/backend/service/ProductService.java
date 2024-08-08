@@ -21,6 +21,7 @@ public class ProductService {
     @Autowired
     private CommentRepository commentRepository;
 
+    // 상품 코드로 상품 리스트 반환
     public List<ProductDetailDto> productsByCode(Long product_code) {
         List<Product> products = productRepository.findByProductCode(product_code);
         return products.stream()
@@ -28,6 +29,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    // 상품 타입으로 상품 리스트 반환
     public List<ProductTypeDto> productByType(String product_type){
         List<Product> products = productRepository.findByProductType(product_type);
         return products.stream()
@@ -35,38 +37,45 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    // 댓글 리스트
     public List<Comment> getComments(){
         return commentRepository.findAll();
     }
 
+    // 상품 생성
     @Transactional
     public ProductDto create(ProductDto productDto) {
+        // 상품 엔티티 생성
         Product product=Product.createProduct(productDto);
+        // DB로 갱신
         Product created=productRepository.save(product);
+        // 상품 엔티티를 DTO로 변환 및 반환
         return ProductDto.createProductDto(created);
     }
 
+    // 상품 수정
     @Transactional
     public ProductDto update(Long product_code, ProductDto productDto) {
         // 상품 조회 및 예외 발생
         Product target=productRepository.findById(product_code)
                 .orElseThrow(() -> new IllegalArgumentException("상품 수정 실패! 대상 상품이 없습니다."));
-        // 2. 댓글 수정
+        // 상품 수정
         target.patch(productDto);
-        // 3. DB로 갱신
+        // DB로 갱신
         Product updated=productRepository.save(target);
-        // 4. 상품 엔티티를 DTO로 변환 및 반환
+        //상품 엔티티를 DTO로 변환 및 반환
         return ProductDto.createProductDto(updated);
     }
 
+    // 상품 삭제
     @Transactional
     public ProductDto delete(Long product_code) {
-        // 1. 상품 조회 및 예외 발생
+        // 상품 조회 및 예외 발생
         Product target=productRepository.findById(product_code)
                 .orElseThrow(() -> new IllegalArgumentException("상품 삭제 실패! 대상 상품이 없습니다."));
-        // 2. 상품 삭제
+        // 상품 삭제
         productRepository.delete(target);
-        // 3. 삭제 댓글을 DTO로 변환 및 반환
+        // 삭제 상품을 DTO로 변환 및 반환
         return ProductDto.createProductDto(target);
     }
 }

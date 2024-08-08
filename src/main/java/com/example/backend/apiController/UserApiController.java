@@ -17,6 +17,7 @@ public class UserApiController {
     @Autowired
     private UserService userService;
 
+    // 마이페이지
     @GetMapping("/api/users/{user_code}")
     public ResponseEntity<List<UserDto>> getUserByUserCode(@PathVariable Long user_code) {
         List<UserDto> dtos = userService.userByUserCode(user_code);

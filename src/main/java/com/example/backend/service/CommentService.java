@@ -24,6 +24,7 @@ public class CommentService {
     @Autowired
     private UserRepository userRepository;
 
+    // 댓글 리스트
     public List<CommentDto> comments(Long product_code){
         List<Comment> comments = commentRepository.CommentByProductCode(product_code);
         return comments.stream()
@@ -31,9 +32,10 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    //댓글 생성
     @Transactional
     public CommentDto create(Long product_code, CommentDto commentDto) {
-        // 1. 게시글 조회 및 예외 발생
+        // 1. 상품 조회 및 예외 발생
         Product product=productRepository.findById(product_code)
                 .orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패! 대상 상품이 없습니다."));
         // 2. 사용자 조회 및 예외 발생
@@ -47,6 +49,7 @@ public class CommentService {
         return CommentDto.createCommentDto(created);
     }
 
+    // 댓글 수정
     @Transactional
     public CommentDto update(Long comment_id, CommentDto commentDto) {
         // 1. 댓글 조회 및 예외 발생
@@ -60,6 +63,7 @@ public class CommentService {
         return CommentDto.createCommentDto(updated);
     }
 
+    // 댓글 삭제
     @Transactional
     public CommentDto delete(Long comment_id) {
         // 1. 댓글 조회 및 예외 발생

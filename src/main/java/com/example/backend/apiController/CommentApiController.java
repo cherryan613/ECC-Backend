@@ -14,6 +14,7 @@ public class CommentApiController {
     @Autowired
     private CommentService commentService;
 
+    // 상품에 대한 모든 댓글
     @GetMapping("/api/products/{product_code}/comments")
     public ResponseEntity<List<CommentDto>> comments(@PathVariable Long product_code) {
         // 서비스에 위임
@@ -22,7 +23,7 @@ public class CommentApiController {
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 
-    // 2. 댓글 생성
+    // 댓글 생성
     @PostMapping("/api/products/{product_code}/comments")
     public ResponseEntity<CommentDto> create(@PathVariable Long product_code, @RequestBody CommentDto dto) {
         // 서비스에 위임
@@ -31,7 +32,7 @@ public class CommentApiController {
         return ResponseEntity.status(HttpStatus.OK).body(createdDto);
     }
 
-    // 3. 댓글 수정
+    // 댓글 수정
     @PatchMapping("/api/comments/{comment_code}")
     public ResponseEntity<CommentDto> update(@PathVariable Long comment_code, @RequestBody CommentDto dto) {
         // 서비스에 위임
@@ -40,7 +41,7 @@ public class CommentApiController {
         return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
     }
 
-    // 4. 댓글 삭제
+    // 댓글 삭제
     @DeleteMapping("/api/comments/{comment_code}")
     public ResponseEntity<CommentDto> delete(@PathVariable Long comment_code) {
         // 서비스에 위임

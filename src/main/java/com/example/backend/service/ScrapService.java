@@ -24,6 +24,7 @@ public class ScrapService {
     @Autowired
     private UserRepository userRepository;
 
+    // 스크랩 리스트
     public List<ScrapDto> scraps(Long user_code){
         List<Scrap> scraps=scrapRepository.ScrapByUserCode(user_code);
         return scraps.stream()
@@ -31,43 +32,46 @@ public class ScrapService {
                 .collect(Collectors.toList());
     }
 
+    // 스크랩 저장
     @Transactional
     public ScrapDto save(Long user_code, ScrapDto scrapDto) {
-        // 1. 상품 조회 및 예외 발생
+        // 상품 조회 및 예외 발생
         Product product=productRepository.findById(scrapDto.getProduct_code())
                 .orElseThrow(() -> new IllegalArgumentException("스크랩 생성 실패! 대상 상품이 없습니다."));
-        // 2. 사용자 조회 및 예외 발생
+        // 사용자 조회 및 예외 발생
         User user=userRepository.findById(user_code)
                 .orElseThrow(() -> new IllegalArgumentException("스크랩 생성 실패! 사용자가 존재하지 않습니다."));
-        // 3. 댓글 엔티티 생성
+        // 스크랩 엔티티 생성
         Scrap scrap = Scrap.createScrap(scrapDto, product, user);
-        // 4. 댓글 엔티티를 DB에 저장
+        // 스크랩 엔티티를 DB에 저장
         Scrap saved=scrapRepository.save(scrap);
-        // 5. DTO로 변환해 반환
+        // DTO로 변환해 반환
         return ScrapDto.createScrapDto(saved);
     }
 
+    // 스크랩 수정
     @Transactional
     public ScrapDto update(Long scrap_code, ScrapDto scrapDto) {
-        // 1. 댓글 조회 및 예외 발생
+        // 스크랩 조회 및 예외 발생
         Scrap target=scrapRepository.findById(scrap_code)
                 .orElseThrow(() -> new IllegalArgumentException("스크랩 수정 실패! 대상 스크랩이 없습니다."));
-        // 2. 댓글 수정
+        // 스크랩 수정
         target.patch(scrapDto);
-        // 3. DB로 갱신
+        // DB로 갱신
         Scrap updated=scrapRepository.save(target);
-        // 4. 댓글 엔티티를 DTO로 변환 및 반환
+        // 스크랩 엔티티를 DTO로 변환 및 반환
         return ScrapDto.createScrapDto(updated);
     }
 
+    // 스크랩 삭제
     @Transactional
     public ScrapDto delete(Long scrap_code) {
-        // 1. 댓글 조회 및 예외 발생
+        // 스크랩 조회 및 예외 발생
         Scrap target=scrapRepository.findById(scrap_code)
                 .orElseThrow(() -> new IllegalArgumentException("스크랩 삭제 실패! 대상 스크랩이 없습니다."));
-        // 2. 댓글 삭제
+        // 스크랩 삭제
         scrapRepository.delete(target);
-        // 3. 삭제 댓글을 DTO로 변환 및 반환
+        // 삭제 스크랩을 DTO로 변환 및 반환
         return ScrapDto.createScrapDto(target);
     }
 
