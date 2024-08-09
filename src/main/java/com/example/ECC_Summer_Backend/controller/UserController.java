@@ -3,6 +3,7 @@ package com.example.ECC_Summer_Backend.controller;
 import com.example.ECC_Summer_Backend.dto.LoginDto;
 import com.example.ECC_Summer_Backend.dto.UserDto;
 import com.example.ECC_Summer_Backend.entity.User;
+import com.example.ECC_Summer_Backend.jwt.JwtUtil;
 import com.example.ECC_Summer_Backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody UserDto userDto){
@@ -64,7 +68,8 @@ public class UserController {
 
         try{
             if(userService.loginUser(loginDto)){
-                return ResponseEntity.ok("로그인 성공");
+                String token = jwtUtil.generateToken(loginDto.getUserId());
+                return ResponseEntity.ok(token);
             }else{
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("회원정보가 일치하지 않습니다.");
             }
