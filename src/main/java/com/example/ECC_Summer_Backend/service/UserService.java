@@ -3,6 +3,7 @@ package com.example.ECC_Summer_Backend.service;
 import com.example.ECC_Summer_Backend.dto.LoginDto;
 import com.example.ECC_Summer_Backend.dto.UserDto;
 import com.example.ECC_Summer_Backend.entity.User;
+import com.example.ECC_Summer_Backend.reopository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.regex.Pattern;
 @Service
 public class UserService {
     @Autowired
-    private com.example.ECC_Summer_Backend.repository.UserRepository userRepository;
+    private UserRepository userRepository;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -30,7 +31,7 @@ public class UserService {
 
     // 비밀번호 길이 검사
     public boolean isPasswordValid(String password){
-        return password != null && password.length() <=20;
+        return password != null && password.length() >= 8 && password.length()<=20;
     }
 
     // 아이디 중복 확인
@@ -49,6 +50,7 @@ public class UserService {
         newUser.setUserPw(bCryptPasswordEncoder.encode(userDto.getUserPw()));
         newUser.setUserName(userDto.getUserName());
         newUser.setUserEmail(userDto.getUserEmail());
+        newUser.setUserRole("USER"); // 기본적으로 USER 권한 부여
         // 데이터베이스에 사용자 정보 저장
         User savedUser = userRepository.save(newUser);
         System.out.println("User registered: " + savedUser.getUserId());

@@ -4,19 +4,31 @@ import com.example.ECC_Summer_Backend.dto.LoginDto;
 import com.example.ECC_Summer_Backend.dto.UserDto;
 import com.example.ECC_Summer_Backend.entity.User;
 import com.example.ECC_Summer_Backend.jwt.JwtUtil;
+import com.example.ECC_Summer_Backend.reopository.UserRepository;
 import com.example.ECC_Summer_Backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 @RestController
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -63,21 +75,33 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginDto loginDto){
+    public ResponseEntity<Map<String, String>> loginUser(@RequestBody LoginDto loginDto){
         System.out.println("Login API called with LoginDto:" + loginDto);
 
         try{
-            if(userService.loginUser(loginDto)){
-                String token = jwtUtil.generateToken(loginDto.getUserId());
-                return ResponseEntity.ok(token);
-            }else{
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("회원정보가 일치하지 않습니다.");
+            Optional<User> userOptional = userRepository.findByUserId(loginDto.getUserId());
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                if (bCryptPasswordEncoder.matches(loginDto.getUserPw(), user.getUserPw())) {
+                    String token = jwtUtil.generateToken(user.getUserId(), user.getUserRole());
+
+                    Map<String, String> response = new HashMap<>();
+                    response.put("token", token);
+                    response.put("role", user.getUserRole());
+
+                    return ResponseEntity.ok(response);
+                } else {
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid credentials"));
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "User not found"));
             }
         }catch (Exception e){
             System.out.println("Error occurred during user login: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Server error"));
         }
     }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception e) {
         System.out.println("Exception handled: " + e.getMessage());

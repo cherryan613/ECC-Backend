@@ -1,4 +1,4 @@
-package com.example.ECC_Summer_Backend.repository;
+package com.example.ECC_Summer_Backend.reopository;
 
 import com.example.ECC_Summer_Backend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

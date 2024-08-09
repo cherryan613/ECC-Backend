@@ -22,4 +22,7 @@ public class User {
 
     @Column(name="user_email")
     private String userEmail; // 이메일
+
+    @Column(name="user_role")
+    private String userRole; // 권한 : USER, ADMIN
 }
