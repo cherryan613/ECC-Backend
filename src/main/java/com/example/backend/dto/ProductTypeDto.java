@@ -11,17 +11,17 @@ import lombok.*;
 
 public class ProductTypeDto { // 상품 비교 페이지
 
-    private String product_name;
-    private String product_feat1;
-    private String product_feat2;
-    private String product_feat3;
+    private String productName;
+    private String productFeat1;
+    private String productFeat2;
+    private String productFeat3;
 
     public static ProductTypeDto createProductDto(Product product){
         return new ProductTypeDto(
-                product.getProduct_name(),
-                product.getFeat1(),
-                product.getFeat2(),
-                product.getFeat3()
+                product.getProductName(),
+                product.getProductFeat1(),
+                product.getProductFeat2(),
+                product.getProductFeat3()
         );
     }
 }

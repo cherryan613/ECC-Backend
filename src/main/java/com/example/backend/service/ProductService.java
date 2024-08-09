@@ -22,16 +22,16 @@ public class ProductService {
     private CommentRepository commentRepository;
 
     // 상품 코드로 상품 리스트 반환
-    public List<ProductDetailDto> productsByCode(Long product_code) {
-        List<Product> products = productRepository.findByProductCode(product_code);
+    public List<ProductDetailDto> productsByCode(Long productCode) {
+        List<Product> products = productRepository.findByProductCode(productCode);
         return products.stream()
                 .map(ProductDetailDto::createProductDto)
                 .collect(Collectors.toList());
     }
 
     // 상품 타입으로 상품 리스트 반환
-    public List<ProductTypeDto> productByType(String product_type){
-        List<Product> products = productRepository.findByProductType(product_type);
+    public List<ProductTypeDto> productByType(String productType){
+        List<Product> products = productRepository.findByProductType(productType);
         return products.stream()
                 .map(ProductTypeDto::createProductDto)
                 .collect(Collectors.toList());
@@ -55,9 +55,9 @@ public class ProductService {
 
     // 상품 수정
     @Transactional
-    public ProductDto update(Long product_code, ProductDto productDto) {
+    public ProductDto update(Long productCode, ProductDto productDto) {
         // 상품 조회 및 예외 발생
-        Product target=productRepository.findById(product_code)
+        Product target=productRepository.findById(productCode)
                 .orElseThrow(() -> new IllegalArgumentException("상품 수정 실패! 대상 상품이 없습니다."));
         // 상품 수정
         target.patch(productDto);
@@ -69,9 +69,9 @@ public class ProductService {
 
     // 상품 삭제
     @Transactional
-    public ProductDto delete(Long product_code) {
+    public ProductDto delete(Long productCode) {
         // 상품 조회 및 예외 발생
-        Product target=productRepository.findById(product_code)
+        Product target=productRepository.findById(productCode)
                 .orElseThrow(() -> new IllegalArgumentException("상품 삭제 실패! 대상 상품이 없습니다."));
         // 상품 삭제
         productRepository.delete(target);

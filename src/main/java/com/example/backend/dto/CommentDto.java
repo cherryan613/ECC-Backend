@@ -13,19 +13,19 @@ import java.time.LocalDateTime;
 
 public class CommentDto {
 
-    private Long comment_code;
-    private String comment_content;
-    private LocalDateTime comment_write_date_time;
-    private Long product_code;
-    private Long user_code;
+    private Long commentCode;
+    private String commentContent;
+    private LocalDateTime commentWriteDateTime;
+    private Long productCode;
+    private Long userCode;
 
     public static CommentDto createCommentDto(Comment comment){
         return new CommentDto(
-                comment.getComment_code(), // 댓글 엔티티의 id
-                comment.getComment_content(), // 댓글 엔티티의 comment
-                comment.getComment_write_date_time(), // 댓글 엔티티의 writeDateTime
-                comment.getProduct().getProduct_code(), // 댓글 엔티티가 속한 상품의 id
-                comment.getUser().getUser_code() // 댓글을 작성한 사용자의 code
+                comment.getCommentCode(), // 댓글 엔티티의 id
+                comment.getCommentContent(), // 댓글 엔티티의 comment
+                comment.getCommentWriteDateTime(), // 댓글 엔티티의 writeDateTime
+                comment.getProduct().getProductCode(), // 댓글 엔티티가 속한 상품의 id
+                comment.getUser().getUserCode() // 댓글을 작성한 사용자의 code
         );
     }
 }

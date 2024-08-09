@@ -25,8 +25,8 @@ public class CommentService {
     private UserRepository userRepository;
 
     // 댓글 리스트
-    public List<CommentDto> comments(Long product_code){
-        List<Comment> comments = commentRepository.CommentByProductCode(product_code);
+    public List<CommentDto> comments(Long productCode){
+        List<Comment> comments = commentRepository.CommentByProductCode(productCode);
         return comments.stream()
                 .map(CommentDto::createCommentDto)
                 .collect(Collectors.toList());
@@ -34,12 +34,12 @@ public class CommentService {
 
     //댓글 생성
     @Transactional
-    public CommentDto create(Long product_code, CommentDto commentDto) {
+    public CommentDto create(Long productCode, CommentDto commentDto) {
         // 1. 상품 조회 및 예외 발생
-        Product product=productRepository.findById(product_code)
+        Product product=productRepository.findById(productCode)
                 .orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패! 대상 상품이 없습니다."));
         // 2. 사용자 조회 및 예외 발생
-        User user=userRepository.findById(commentDto.getUser_code())
+        User user=userRepository.findById(commentDto.getUserCode())
                 .orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패! 사용자가 존재하지 않습니다."));
         // 3. 댓글 엔티티 생성
         Comment comment = Comment.createComment(commentDto, product, user);
@@ -51,9 +51,9 @@ public class CommentService {
 
     // 댓글 수정
     @Transactional
-    public CommentDto update(Long comment_id, CommentDto commentDto) {
+    public CommentDto update(Long commentId, CommentDto commentDto) {
         // 1. 댓글 조회 및 예외 발생
-        Comment target = commentRepository.findById(comment_id)
+        Comment target = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("댓글 수정 실패! 대상 댓글이 없습니다."));
         // 2. 댓글 수정
         target.patch(commentDto);
@@ -65,9 +65,9 @@ public class CommentService {
 
     // 댓글 삭제
     @Transactional
-    public CommentDto delete(Long comment_id) {
+    public CommentDto delete(Long commentId) {
         // 1. 댓글 조회 및 예외 발생
-        Comment target = commentRepository.findById(comment_id)
+        Comment target = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("댓글 삭제 실패! 대상이 없습니다."));
         // 2. 댓글 삭제
         commentRepository.delete(target);

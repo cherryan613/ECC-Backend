@@ -16,11 +16,11 @@ public class CommentApiController {
     private CommentService commentService;
 
     // 상품에 대한 모든 댓글
-    @GetMapping("/api/products/{product_code}/comments")
-    public ResponseEntity<ResponseDto<?>> comments(@PathVariable Long product_code) {
+    @GetMapping("/api/products/{productCode}/comments")
+    public ResponseEntity<ResponseDto<?>> comments(@PathVariable Long productCode) {
         try{
             // 서비스에 위임
-            List<CommentDto> dtos = commentService.comments(product_code);
+            List<CommentDto> dtos = commentService.comments(productCode);
             // 결과 응답
             return ResponseEntity.ok(new ResponseDto<>("댓글을 성공적으로 조회하였습니다.", dtos));
         } catch (Exception e) {
@@ -30,11 +30,11 @@ public class CommentApiController {
     }
 
     // 댓글 생성
-    @PostMapping("/api/products/{product_code}/comments")
-    public ResponseEntity<ResponseDto<?>> create(@PathVariable Long product_code, @RequestBody CommentDto dto) {
+    @PostMapping("/api/products/{productCode}/comments")
+    public ResponseEntity<ResponseDto<?>> create(@PathVariable Long productCode, @RequestBody CommentDto dto) {
         try {
             // 서비스에 위임
-            CommentDto createdDto = commentService.create(product_code, dto);
+            CommentDto createdDto = commentService.create(productCode, dto);
             // 결과 응답
             return ResponseEntity.ok(new ResponseDto<>("댓글을 성공적으로 생성하였습니다.", createdDto));
         } catch (Exception e) {
@@ -44,11 +44,11 @@ public class CommentApiController {
     }
 
     // 댓글 수정
-    @PatchMapping("/api/comments/{comment_code}")
-    public ResponseEntity<ResponseDto<?>> update(@PathVariable Long comment_code, @RequestBody CommentDto dto) {
+    @PatchMapping("/api/comments/{commentCode}")
+    public ResponseEntity<ResponseDto<?>> update(@PathVariable Long commentCode, @RequestBody CommentDto dto) {
         try {
             // 서비스에 위임
-            CommentDto updatedDto = commentService.update(comment_code, dto);
+            CommentDto updatedDto = commentService.update(commentCode, dto);
             // 결과 응답
             return ResponseEntity.ok(new ResponseDto<>("댓글을 성공적으로 수정하였습니다.", updatedDto));
         } catch (Exception e) {
@@ -58,11 +58,11 @@ public class CommentApiController {
     }
 
     // 댓글 삭제
-    @DeleteMapping("/api/comments/{comment_code}")
-    public ResponseEntity<ResponseDto<?>> delete(@PathVariable Long comment_code) {
+    @DeleteMapping("/api/comments/{commentCode}")
+    public ResponseEntity<ResponseDto<?>> delete(@PathVariable Long commentCode) {
         try {
             // 서비스에 위임
-            CommentDto deletedDto = commentService.delete(comment_code);
+            CommentDto deletedDto = commentService.delete(commentCode);
             // 결과 응답
             return ResponseEntity.ok(new ResponseDto<>("댓글을 성공적으로 삭제하였습니다.", deletedDto));
         } catch (Exception e) {

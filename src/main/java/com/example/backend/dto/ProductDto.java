@@ -14,41 +14,41 @@ import java.time.LocalDateTime;
 
 public class ProductDto {
 
-    private Long product_code;
-    private String product_name;
-    private String product_type;
-    private BigDecimal product_interest_rate;
-    private BigDecimal product_interest_top_rate;
-    private String product_bank;
-    private String product_amount;
-    private String product_age;
-    private String product_term;
-    private String product_benefit;
-    private String product_url;
-    private String product_description;
-    private LocalDateTime product_last_update;
-    private String feat1;
-    private String feat2;
-    private String feat3;
+    private Long productCode;
+    private String productName;
+    private String productType;
+    private BigDecimal productInterestRate;
+    private BigDecimal productInterestTopRate;
+    private String productBank;
+    private String productAmount;
+    private String productAge;
+    private String productTerm;
+    private String productBenefit;
+    private String productUrl;
+    private String productDescription;
+    private LocalDateTime productLastUpdate;
+    private String productFeat1;
+    private String productFeat2;
+    private String productFeat3;
 
     public static ProductDto createProductDto(Product product){
         return new ProductDto(
-                product.getProduct_code(),
-                product.getProduct_name(),
-                product.getProduct_type(),
-                product.getProduct_interest_rate(),
-                product.getProduct_interest_top_rate(),
-                product.getProduct_bank(),
-                product.getProduct_amount(),
-                product.getProduct_age(),
-                product.getProduct_term(),
-                product.getProduct_benefit(),
-                product.getProduct_url(),
-                product.getProduct_description(),
-                product.getProduct_last_update(),
-                product.getFeat1(),
-                product.getFeat2(),
-                product.getFeat3()
+                product.getProductCode(),
+                product.getProductName(),
+                product.getProductType(),
+                product.getProductInterestRate(),
+                product.getProductInterestTopRate(),
+                product.getProductBank(),
+                product.getProductAmount(),
+                product.getProductAge(),
+                product.getProductTerm(),
+                product.getProductBenefit(),
+                product.getProductUrl(),
+                product.getProductDescription(),
+                product.getProductLastUpdate(),
+                product.getProductFeat1(),
+                product.getProductFeat2(),
+                product.getProductFeat3()
         );
     }
 }

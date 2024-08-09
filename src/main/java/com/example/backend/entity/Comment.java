@@ -20,13 +20,13 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) // DB에 등록될 때 자동으로 1씩 증가
-    private Long comment_code;
+    private Long commentCode;
 
     @Column(name="comment_content")
-    private String comment_content;
+    private String commentContent;
 
     @Column(name="comment_write_date_time", insertable = false, updatable = false) // 현재 시각이 자동으로 기록되도록 함
-    private LocalDateTime comment_write_date_time;
+    private LocalDateTime commentWriteDateTime;
 
     @ManyToOne
     @JoinColumn(name = "product_code")
@@ -39,18 +39,18 @@ public class Comment {
 
     public static Comment createComment(CommentDto commentDto, Product product, User user) {
         // 예외 발생
-        if (commentDto.getComment_code() != null)
+        if (commentDto.getCommentCode() != null)
             throw new IllegalArgumentException("댓글 생성 실패! 댓글 code는 중복될 수 없습니다.");
-        if (commentDto.getProduct_code() != product.getProduct_code())
+        if (commentDto.getProductCode() != product.getProductCode())
             throw new IllegalArgumentException("댓글 생성 실패! 상품 code가 잘못됐습니다.");
-        if(commentDto.getUser_code() != user.getUser_code())
+        if(commentDto.getUserCode() != user.getUserCode())
             throw  new IllegalArgumentException("댓글 생성 실패! 사용자 code가 잘못됐습니다.");
 
         // 엔티티 생성 및 반환
         return new Comment(
-                commentDto.getComment_code(),
-                commentDto.getComment_content(),
-                commentDto.getComment_write_date_time(),
+                commentDto.getCommentCode(),
+                commentDto.getCommentContent(),
+                commentDto.getCommentWriteDateTime(),
                 product,
                 user
         );
@@ -58,12 +58,12 @@ public class Comment {
 
     public void patch(CommentDto commentDto) {
         // 예외 발생
-        if (this.comment_code != commentDto.getComment_code())
+        if (this.commentCode != commentDto.getCommentCode())
             throw new IllegalArgumentException("댓글 수정 실패! 잘못된 댓글 code가 입력됐습니다.");
         // 객체 갱신
-        if (commentDto.getComment_content() != null) { // 수정할 본문 데이터가 있다면
-            this.comment_content = commentDto.getComment_content(); // 내용 반영
-            this.comment_write_date_time = commentDto.getComment_write_date_time(); // 수정된 시각 반영
+        if (commentDto.getCommentContent() != null) { // 수정할 본문 데이터가 있다면
+            this.commentContent = commentDto.getCommentContent(); // 내용 반영
+            this.commentWriteDateTime = commentDto.getCommentWriteDateTime(); // 수정된 시각 반영
         }
     }
 }

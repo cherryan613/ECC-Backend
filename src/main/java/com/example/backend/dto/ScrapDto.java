@@ -13,19 +13,19 @@ import java.time.LocalDateTime;
 
 public class ScrapDto {
 
-    private Long scrap_code;
-    private LocalDateTime scrap_time;
-    private String scrap_memo;
-    private Long product_code;
-    private Long user_code;
+    private Long scrapCode;
+    private LocalDateTime scrapTime;
+    private String scrapMemo;
+    private Long productCode;
+    private Long userCode;
 
     public static ScrapDto createScrapDto(Scrap scrap){
         return new ScrapDto(
-                scrap.getScrap_code(),
-                scrap.getScrap_time(),
-                scrap.getScrap_memo(),
-                scrap.getProduct().getProduct_code(),
-                scrap.getUser().getUser_code()
+                scrap.getScrapCode(),
+                scrap.getScrapTime(),
+                scrap.getScrapMemo(),
+                scrap.getProduct().getProductCode(),
+                scrap.getUser().getUserCode()
         );
     }
 }

@@ -17,11 +17,11 @@ public class ScrapApiController {
     ScrapService scrapService;
 
     // 유저에 대한 모든 스크랩
-    @GetMapping("/api/users/{user_code}/scraps")
-    public ResponseEntity<ResponseDto<?>> scraps(@PathVariable Long user_code) {
+    @GetMapping("/api/users/{userCode}/scraps")
+    public ResponseEntity<ResponseDto<?>> scraps(@PathVariable Long userCode) {
         try {
             // 서비스에 위임
-            List<ScrapDto> dtos = scrapService.scraps(user_code);
+            List<ScrapDto> dtos = scrapService.scraps(userCode);
             // 결과 응답
             return ResponseEntity.ok(new ResponseDto<>("스크랩을 성공적으로 조회하였습니다.", dtos));
         } catch (Exception e) {
@@ -31,11 +31,11 @@ public class ScrapApiController {
     }
 
     // 스크랩 저장
-    @PostMapping("/api/users/{user_code}/scraps")
-    public ResponseEntity<ResponseDto<?>> save(@PathVariable Long user_code, @RequestBody ScrapDto dto) {
+    @PostMapping("/api/users/{userCode}/scraps")
+    public ResponseEntity<ResponseDto<?>> save(@PathVariable Long userCode, @RequestBody ScrapDto dto) {
         try {
             // 서비스에 위임
-            ScrapDto savedDto = scrapService.save(user_code, dto);
+            ScrapDto savedDto = scrapService.save(userCode, dto);
             // 결과 응답
             return ResponseEntity.ok(new ResponseDto<>("스크랩을 성공적으로 저장하였습니다.", savedDto));
         } catch (Exception e) {
@@ -45,11 +45,11 @@ public class ScrapApiController {
     }
 
     // 스크랩 수정
-    @PatchMapping("/api/scraps/{scrap_code}")
-    public ResponseEntity<ResponseDto<?>> update(@PathVariable Long scrap_code, @RequestBody ScrapDto dto) {
+    @PatchMapping("/api/scraps/{scrapCode}")
+    public ResponseEntity<ResponseDto<?>> update(@PathVariable Long scrapCode, @RequestBody ScrapDto dto) {
         try {
             // 서비스에 위임
-            ScrapDto updatedDto = scrapService.update(scrap_code, dto);
+            ScrapDto updatedDto = scrapService.update(scrapCode, dto);
             // 결과 응답
             return ResponseEntity.ok(new ResponseDto<>("스크랩을 성공적으로 수정하였습니다.", updatedDto));
         } catch (Exception e) {
@@ -59,11 +59,11 @@ public class ScrapApiController {
     }
 
     // 스크랩 삭제
-    @DeleteMapping("/api/scraps/{scrap_code}")
-    public ResponseEntity<ResponseDto<?>> delete(@PathVariable Long scrap_code) {
+    @DeleteMapping("/api/scraps/{scrapCode}")
+    public ResponseEntity<ResponseDto<?>> delete(@PathVariable Long scrapCode) {
         try {
             // 서비스에 위임
-            ScrapDto deletedDto = scrapService.delete(scrap_code);
+            ScrapDto deletedDto = scrapService.delete(scrapCode);
             // 결과 응답
             return ResponseEntity.ok(new ResponseDto<>("스크랩을 성공적으로 삭제하였습니다.", deletedDto));
         } catch (Exception e) {

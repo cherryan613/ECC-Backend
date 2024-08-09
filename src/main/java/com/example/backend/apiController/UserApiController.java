@@ -5,9 +5,7 @@ import com.example.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,9 +16,9 @@ public class UserApiController {
     private UserService userService;
 
     // 마이페이지
-    @GetMapping("/api/users/{user_code}")
-    public ResponseEntity<List<UserDto>> getUserByUserCode(@PathVariable Long user_code) {
-        List<UserDto> dtos = userService.userByUserCode(user_code);
+    @GetMapping("/api/users/{userCode}")
+    public ResponseEntity<List<UserDto>> getUserByUserCode(@PathVariable Long userCode) {
+        List<UserDto> dtos = userService.userByUserCode(userCode);
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 }

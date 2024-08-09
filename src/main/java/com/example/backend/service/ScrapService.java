@@ -25,8 +25,8 @@ public class ScrapService {
     private UserRepository userRepository;
 
     // 스크랩 리스트
-    public List<ScrapDto> scraps(Long user_code){
-        List<Scrap> scraps=scrapRepository.ScrapByUserCode(user_code);
+    public List<ScrapDto> scraps(Long userCode){
+        List<Scrap> scraps=scrapRepository.ScrapByUserCode(userCode);
         return scraps.stream()
                 .map(ScrapDto::createScrapDto)
                 .collect(Collectors.toList());
@@ -34,12 +34,12 @@ public class ScrapService {
 
     // 스크랩 저장
     @Transactional
-    public ScrapDto save(Long user_code, ScrapDto scrapDto) {
+    public ScrapDto save(Long userCode, ScrapDto scrapDto) {
         // 상품 조회 및 예외 발생
-        Product product=productRepository.findById(scrapDto.getProduct_code())
+        Product product=productRepository.findById(scrapDto.getProductCode())
                 .orElseThrow(() -> new IllegalArgumentException("스크랩 생성 실패! 대상 상품이 없습니다."));
         // 사용자 조회 및 예외 발생
-        User user=userRepository.findById(user_code)
+        User user=userRepository.findById(userCode)
                 .orElseThrow(() -> new IllegalArgumentException("스크랩 생성 실패! 사용자가 존재하지 않습니다."));
         // 스크랩 엔티티 생성
         Scrap scrap = Scrap.createScrap(scrapDto, product, user);
@@ -51,9 +51,9 @@ public class ScrapService {
 
     // 스크랩 수정
     @Transactional
-    public ScrapDto update(Long scrap_code, ScrapDto scrapDto) {
+    public ScrapDto update(Long scrapCode, ScrapDto scrapDto) {
         // 스크랩 조회 및 예외 발생
-        Scrap target=scrapRepository.findById(scrap_code)
+        Scrap target=scrapRepository.findById(scrapCode)
                 .orElseThrow(() -> new IllegalArgumentException("스크랩 수정 실패! 대상 스크랩이 없습니다."));
         // 스크랩 수정
         target.patch(scrapDto);
@@ -65,9 +65,9 @@ public class ScrapService {
 
     // 스크랩 삭제
     @Transactional
-    public ScrapDto delete(Long scrap_code) {
+    public ScrapDto delete(Long scrapCode) {
         // 스크랩 조회 및 예외 발생
-        Scrap target=scrapRepository.findById(scrap_code)
+        Scrap target=scrapRepository.findById(scrapCode)
                 .orElseThrow(() -> new IllegalArgumentException("스크랩 삭제 실패! 대상 스크랩이 없습니다."));
         // 스크랩 삭제
         scrapRepository.delete(target);

@@ -10,23 +10,22 @@ import lombok.*;
 @Setter // 각 필드 값을 설정할 수 있는 setter 메서드 자동 생성
 @ToString // 모든 필드를 출력할 수 있는 toString 메서드 자동 생성
 
+@Data
 public class UserDto {
 
-    private Long user_code;
-    private String user_id;
-    private String user_name;
-    private String user_pw;
-    private String user_email;
-    private char user_auth;
+    private Long userCode;
+    private String userId;
+    private String userName;
+    private String userPw;
+    private String userEmail;
 
     public static UserDto createUserDto(User user){
         return new UserDto(
-                user.getUser_code(),
-                user.getUser_id(),
-                user.getUser_name(),
-                user.getUser_pw(),
-                user.getUser_email(),
-                user.getUser_auth()
+                user.getUserCode(),
+                user.getUserId(),
+                user.getUserName(),
+                user.getUserPw(),
+                user.getUserEmail()
         );
     }
 }

@@ -21,13 +21,13 @@ public class Scrap {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long scrap_code;
+    private Long scrapCode;
 
     @Column(name = "scrap_time")
-    private LocalDateTime scrap_time;
+    private LocalDateTime scrapTime;
 
     @Column(name="scrap_memo")
-    private String scrap_memo;
+    private String scrapMemo;
 
     @ManyToOne
     @JoinColumn(name="product_code")
@@ -41,17 +41,17 @@ public class Scrap {
 
     public static Scrap createScrap(ScrapDto scrapDto, Product product, User user) {
         // 예외 발생
-        if(scrapDto.getScrap_code() != null)
+        if(scrapDto.getScrapCode() != null)
             throw new IllegalArgumentException("스크랩 생성 실패! 스크랩 code는 중복될 수 없습니다.");
-        if(scrapDto.getProduct_code() != product.getProduct_code())
+        if(scrapDto.getProductCode() != product.getProductCode())
             throw new IllegalArgumentException("스크랩 생성 실패! 상품 code가 잘못됐습니다.");
-        if(scrapDto.getUser_code() != user.getUser_code())
+        if(scrapDto.getUserCode() != user.getUserCode())
             throw new IllegalArgumentException("스크랩 생성 실패! 사용자 code가 잘못됐습니다.");
 
         return new Scrap(
-                scrapDto.getScrap_code(),
-                scrapDto.getScrap_time(),
-                scrapDto.getScrap_memo(),
+                scrapDto.getScrapCode(),
+                scrapDto.getScrapTime(),
+                scrapDto.getScrapMemo(),
                 product,
                 user
         );
@@ -59,12 +59,12 @@ public class Scrap {
 
     public void patch(ScrapDto scrapDto) {
         // 예외 발생
-        if (this.scrap_code != scrapDto.getScrap_code())
+        if (this.scrapCode != scrapDto.getScrapCode())
             throw new IllegalArgumentException("스크랩 수정 실패! 잘못된 스크랩 code가 입력됐습니다.");
         // 객체 갱신
-        if (scrapDto.getScrap_memo() != null) { // 수정할 본문 데이터가 있다면
-            this.scrap_memo = scrapDto.getScrap_memo(); // 내용 반영
-            this.scrap_time = scrapDto.getScrap_time();
+        if (scrapDto.getScrapMemo() != null) { // 수정할 본문 데이터가 있다면
+            this.scrapMemo = scrapDto.getScrapMemo(); // 내용 반영
+            this.scrapTime = scrapDto.getScrapTime();
         }
     }
 

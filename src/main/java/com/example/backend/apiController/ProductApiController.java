@@ -19,10 +19,10 @@ public class ProductApiController {
     private ProductService productService;
 
     // 상품 상세 페이지
-    @GetMapping("/product/{product_code}")
-    public ResponseEntity<ResponseDto<?>> getProductByCode(@PathVariable Long product_code) {
+    @GetMapping("/api/products/{productCode}")
+    public ResponseEntity<ResponseDto<?>> getProductByCode(@PathVariable Long productCode) {
         try {
-            List<ProductDetailDto> dtos = productService.productsByCode(product_code);
+            List<ProductDetailDto> dtos = productService.productsByCode(productCode);
             return ResponseEntity.ok(new ResponseDto<>("상품을 성공적으로 조회하였습니다.", dtos));
         } catch (Exception e) {
             ResponseDto<String> responseDto = new ResponseDto<>(e.getMessage(), null);
@@ -31,10 +31,10 @@ public class ProductApiController {
     }
 
     // 상품 비교 페이지
-    @GetMapping("/product/type/{type}")
-    public ResponseEntity<ResponseDto<?>> getProductByType(@PathVariable String type) {
+    @GetMapping("/api/products/productType/{productType}")
+    public ResponseEntity<ResponseDto<?>> getProductByType(@PathVariable String productType) {
         try {
-            List<ProductTypeDto> dtos = productService.productByType(type);
+            List<ProductTypeDto> dtos = productService.productByType(productType);
             return ResponseEntity.ok(new ResponseDto<>("상품을 성공적으로 조회하였습니다.", dtos));
         } catch (Exception e) {
             ResponseDto<String> responseDto = new ResponseDto<>(e.getMessage(), null);
@@ -43,7 +43,7 @@ public class ProductApiController {
     }
 
     // 상품 등록
-    @PostMapping("/product")
+    @PostMapping("/api/products")
     public ResponseEntity<ResponseDto<?>> create(@RequestBody ProductDto productDto){
         try {
             ProductDto dtos = productService.create(productDto);
@@ -55,10 +55,10 @@ public class ProductApiController {
     }
 
     // 상품 수정
-    @PatchMapping("/product/{product_code}")
-    public ResponseEntity<ResponseDto<?>> update(@PathVariable Long product_code, @RequestBody ProductDto productDto){
+    @PatchMapping("/api/products/{productCode}")
+    public ResponseEntity<ResponseDto<?>> update(@PathVariable Long productCode, @RequestBody ProductDto productDto){
         try{
-            ProductDto dtos=productService.update(product_code, productDto);
+            ProductDto dtos=productService.update(productCode, productDto);
             return ResponseEntity.ok(new ResponseDto<>("상품을 성공적으로 수정하였습니다.", dtos));
         } catch (Exception e) {
             ResponseDto<String> responseDto = new ResponseDto<>(e.getMessage(), null);
@@ -67,10 +67,10 @@ public class ProductApiController {
     }
 
     // 상품 삭제
-    @DeleteMapping("/product/{product_code}")
-    public ResponseEntity<ResponseDto<?>> delete(@PathVariable Long product_code){
+    @DeleteMapping("/api/products/{productCode}")
+    public ResponseEntity<ResponseDto<?>> delete(@PathVariable Long productCode){
         try {
-            ProductDto dtos = productService.delete(product_code);
+            ProductDto dtos = productService.delete(productCode);
             return ResponseEntity.ok(new ResponseDto<>("상품을 성공적으로 삭제하였습니다.", dtos));
         } catch (Exception e) {
             ResponseDto<String> responseDto = new ResponseDto<>(e.getMessage(), null);

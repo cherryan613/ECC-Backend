@@ -5,6 +5,7 @@ import com.example.backend.entity.Scrap;
 import com.example.backend.entity.User;
 import com.example.backend.repository.ScrapRepository;
 import com.example.backend.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +16,10 @@ public class UserService {
 
     private UserRepository userRepository;
     private ScrapRepository scrapRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    public List<UserDto> userByUserCode(Long user_code) {
-        List<User> users = userRepository.UserByUserCode(user_code);
+    public List<UserDto> userByUserCode(Long userCode) {
+        List<User> users = userRepository.UserByUserCode(userCode);
         return users.stream()
                 .map(UserDto::createUserDto)
                 .collect(Collectors.toList());

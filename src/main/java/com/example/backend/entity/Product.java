@@ -21,138 +21,138 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long product_code;
+    private Long productCode;
 
     @Column(name = "product_name")
-    private String product_name;
+    private String productName;
 
     @Column(name="product_type")
-    private String product_type;
+    private String productType;
 
     @Column(name = "product_interest_rate")
-    private BigDecimal product_interest_rate;
+    private BigDecimal productInterestRate;
 
     @Column(name = "product_interest_top_rate")
-    private BigDecimal product_interest_top_rate;
+    private BigDecimal productInterestTopRate;
 
     @Column(name = "product_bank")
-    private String product_bank;
+    private String productBank;
 
     @Column(name = "product_age")
-    private String product_age;
+    private String productAge;
 
     @Column(name = "product_amount")
-    private String product_amount;
+    private String productAmount;
 
     @Column(name = "product_url")
-    private String product_url;
+    private String productUrl;
 
     @Column(name = "product_term")
-    private String product_term;
+    private String productTerm;
 
     @Column(name = "product_benefit")
-    private String product_benefit;
+    private String productBenefit;
 
     @Column(name="product_description")
-    private String product_description;
+    private String productDescription;
 
     @Column(name = "product_last_update", insertable = false, updatable = false) //MySQL이 자동으로 현재 시각 등록
-    private LocalDateTime product_last_update;
+    private LocalDateTime productLastUpdate;
 
-    @Column(name="feat1")
-    private String feat1;
+    @Column(name="product_feat1")
+    private String productFeat1;
 
-    @Column(name="feat2")
-    private String feat2;
+    @Column(name="product_feat2")
+    private String productFeat2;
 
-    @Column(name="feat3")
-    private String feat3;
+    @Column(name="product_feat3")
+    private String productFeat3;
 
     public static Product createProduct(ProductDto productDto) {
         // 예외 발생
-        if(productDto.getProduct_code() != null)
+        if(productDto.getProductCode() != null)
             throw new IllegalArgumentException("상품 생성 실패! 상품 code는 중복될 수 없습니다.");
 
         return new Product(
-                productDto.getProduct_code(),
-                productDto.getProduct_name(),
-                productDto.getProduct_type(),
-                productDto.getProduct_interest_rate(),
-                productDto.getProduct_interest_top_rate(),
-                productDto.getProduct_bank(),
-                productDto.getProduct_age(),
-                productDto.getProduct_amount(),
-                productDto.getProduct_url(),
-                productDto.getProduct_term(),
-                productDto.getProduct_benefit(),
-                productDto.getProduct_description(),
-                productDto.getProduct_last_update(),
-                productDto.getFeat1(),
-                productDto.getFeat2(),
-                productDto.getFeat3()
+                productDto.getProductCode(),
+                productDto.getProductName(),
+                productDto.getProductType(),
+                productDto.getProductInterestRate(),
+                productDto.getProductInterestTopRate(),
+                productDto.getProductBank(),
+                productDto.getProductAge(),
+                productDto.getProductAmount(),
+                productDto.getProductUrl(),
+                productDto.getProductTerm(),
+                productDto.getProductBenefit(),
+                productDto.getProductDescription(),
+                productDto.getProductLastUpdate(),
+                productDto.getProductFeat1(),
+                productDto.getProductFeat2(),
+                productDto.getProductFeat3()
         );
     }
 
     public void patch(ProductDto productDto) {
         // 예외 발생
-        if (this.product_code != productDto.getProduct_code())
+        if (this.productCode != productDto.getProductCode())
             throw new IllegalArgumentException("상품 수정 실패! 잘못된 상품 code가 입력됐습니다.");
         // 객체 갱신
-        if (productDto.getProduct_name() != null) { // 수정할 name이 있다면
-            this.product_name = productDto.getProduct_name();
-            this.product_last_update = productDto.getProduct_last_update();
+        if (productDto.getProductName() != null) { // 수정할 name이 있다면
+            this.productName = productDto.getProductName();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
-        if (productDto.getProduct_type() != null) { // 수정할 type이 있다면
-            this.product_type = productDto.getProduct_type();
-            this.product_last_update = productDto.getProduct_last_update();
+        if (productDto.getProductType() != null) { // 수정할 type이 있다면
+            this.productType = productDto.getProductType();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
-        if (productDto.getProduct_interest_rate() != null) {// 수정할 interest rate이 있다면
-            this.product_interest_rate = productDto.getProduct_interest_rate();
-            this.product_last_update = productDto.getProduct_last_update();
+        if (productDto.getProductInterestRate() != null) {// 수정할 interest rate이 있다면
+            this.productInterestRate = productDto.getProductInterestRate();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
-        if (productDto.getProduct_interest_top_rate() != null) { // 수정할 interest top rate이 있다면
-            this.product_interest_top_rate = productDto.getProduct_interest_top_rate();
-            this.product_last_update = productDto.getProduct_last_update();
+        if (productDto.getProductInterestTopRate() != null) { // 수정할 interest top rate이 있다면
+            this.productInterestTopRate = productDto.getProductInterestTopRate();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
-        if (productDto.getProduct_bank() != null) { // 수정할 bank가 있다면
-            this.product_bank = productDto.getProduct_bank();
-            this.product_last_update = productDto.getProduct_last_update();
+        if (productDto.getProductBank() != null) { // 수정할 bank가 있다면
+            this.productBank = productDto.getProductBank();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
-        if (productDto.getProduct_age() != null){ // 수정할 age가 있다면
-           this.product_age=productDto.getProduct_age();
-           this.product_last_update=productDto.getProduct_last_update();
+        if (productDto.getProductAge() != null){ // 수정할 age가 있다면
+            this.productAge =productDto.getProductAge();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
-        if (productDto.getProduct_amount() != null){ // 수정할 amount가 있다면
-            this.product_amount=productDto.getProduct_amount();
-            this.product_last_update=productDto.getProduct_last_update();
+        if (productDto.getProductAmount() != null){ // 수정할 amount가 있다면
+            this.productAmount =productDto.getProductAmount();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
-        if (productDto.getProduct_url() != null){ // 수정할 url이 있다면
-            this.product_url=productDto.getProduct_url();
-            this.product_last_update=productDto.getProduct_last_update();
+        if (productDto.getProductUrl() != null){ // 수정할 url이 있다면
+            this.productUrl =productDto.getProductUrl();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
-        if (productDto.getProduct_term() != null){ // 수정할 term이 있다면
-            this.product_term=productDto.getProduct_term();
-            this.product_last_update=productDto.getProduct_last_update();
+        if (productDto.getProductTerm() != null){ // 수정할 term이 있다면
+            this.productTerm =productDto.getProductTerm();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
-        if (productDto.getProduct_benefit() != null){ // 수정할 benefit이 있다면
-            this.product_benefit=productDto.getProduct_benefit();
-            this.product_last_update=productDto.getProduct_last_update();
+        if (productDto.getProductBenefit() != null){ // 수정할 benefit이 있다면
+            this.productBenefit =productDto.getProductBenefit();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
-        if (productDto.getProduct_description() != null){ // 수정할 description이 있다면
-            this.product_description = productDto.getProduct_description();
-            this.product_last_update=productDto.getProduct_last_update();
+        if (productDto.getProductDescription() != null){ // 수정할 description이 있다면
+            this.productDescription = productDto.getProductDescription();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
-        if (productDto.getFeat1() != null){ // 수정할 feat1이 있다면
-            this.feat1 = productDto.getFeat1();
-            this.product_last_update=productDto.getProduct_last_update();
+        if (productDto.getProductFeat1() != null){ // 수정할 feat1이 있다면
+            this.productFeat1 = productDto.getProductFeat1();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
-        if (productDto.getFeat2() != null){ // 수정할 feat2가 있다면
-            this.feat2 = productDto.getFeat2();
-            this.product_last_update=productDto.getProduct_last_update();
+        if (productDto.getProductFeat2() != null){ // 수정할 feat2가 있다면
+            this.productFeat2 = productDto.getProductFeat2();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
-        if (productDto.getFeat3() != null){ // 수정할 feat3이 있다면
-            this.feat3 = productDto.getFeat3();
-            this.product_last_update=productDto.getProduct_last_update();
+        if (productDto.getProductFeat3() != null){ // 수정할 feat3이 있다면
+            this.productFeat3 = productDto.getProductFeat3();
+            this.productLastUpdate = productDto.getProductLastUpdate();
         }
     }
 }
