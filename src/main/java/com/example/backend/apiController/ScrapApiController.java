@@ -21,7 +21,7 @@ public class ScrapApiController {
     public ResponseEntity<ResponseDto<?>> scraps(@PathVariable Long userCode) {
         try {
             // 서비스에 위임
-            List<ScrapDto> dtos = scrapService.scraps(userCode);
+            List<ScrapDto> dtos = scrapService.scrapsByUserCode(userCode);
             // 결과 응답
             return ResponseEntity.ok(new ResponseDto<>("스크랩을 성공적으로 조회하였습니다.", dtos));
         } catch (Exception e) {
