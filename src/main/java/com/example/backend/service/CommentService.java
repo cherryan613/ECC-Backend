@@ -1,12 +1,14 @@
 package com.example.backend.service;
 
 import com.example.backend.dto.CommentDto;
+import com.example.backend.dto.ProductCommentDto;
 import com.example.backend.entity.Comment;
 import com.example.backend.entity.Product;
 import com.example.backend.entity.User;
 import com.example.backend.repository.CommentRepository;
 import com.example.backend.repository.ProductRepository;
 import com.example.backend.repository.UserRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +26,17 @@ public class CommentService {
     @Autowired
     private UserRepository userRepository;
 
-    // 댓글 리스트
-    public List<CommentDto> comments(Long productCode){
+    // 상품 코드에 대한 댓글 리스트
+    public List<CommentDto> commentsByProductCode(Long productCode){
         List<Comment> comments = commentRepository.CommentByProductCode(productCode);
+        return comments.stream()
+                .map(CommentDto::createCommentDto)
+                .collect(Collectors.toList());
+    }
+
+    // 사용자 코드에 대한 댓글 리스트
+    public List<CommentDto> commentsByUserCode(Long userCode){
+        List<Comment> comments = commentRepository.CommentByUserCode(userCode);
         return comments.stream()
                 .map(CommentDto::createCommentDto)
                 .collect(Collectors.toList());
