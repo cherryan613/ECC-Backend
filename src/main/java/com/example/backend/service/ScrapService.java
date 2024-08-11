@@ -7,6 +7,7 @@ import com.example.backend.entity.User;
 import com.example.backend.repository.ProductRepository;
 import com.example.backend.repository.ScrapRepository;
 import com.example.backend.repository.UserRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +25,8 @@ public class ScrapService {
     @Autowired
     private UserRepository userRepository;
 
-    // 스크랩 리스트
-    public List<ScrapDto> scraps(Long userCode){
+    // 사용자 코드에 대한 스크랩 리스트
+    public List<ScrapDto> scrapsByUserCode(Long userCode){
         List<Scrap> scraps=scrapRepository.ScrapByUserCode(userCode);
         return scraps.stream()
                 .map(ScrapDto::createScrapDto)
