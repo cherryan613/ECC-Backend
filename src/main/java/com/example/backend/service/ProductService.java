@@ -7,6 +7,7 @@ import com.example.backend.entity.Comment;
 import com.example.backend.entity.Product;
 import com.example.backend.repository.CommentRepository;
 import com.example.backend.repository.ProductRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,12 +22,10 @@ public class ProductService {
     @Autowired
     private CommentRepository commentRepository;
 
-    // 상품 코드로 상품 리스트 반환
-    public List<ProductDetailDto> productsByCode(Long productCode) {
-        List<Product> products = productRepository.findByProductCode(productCode);
-        return products.stream()
-                .map(ProductDetailDto::createProductDto)
-                .collect(Collectors.toList());
+    // 상품 코드로 상품 반환
+    public ProductDetailDto productsByCode(Long productCode) {
+        Product products = productRepository.findByProductCode(productCode);
+        return ProductDetailDto.createProductDto(products);
     }
 
     // 상품 타입으로 상품 리스트 반환
@@ -35,11 +34,6 @@ public class ProductService {
         return products.stream()
                 .map(ProductTypeDto::createProductDto)
                 .collect(Collectors.toList());
-    }
-
-    // 댓글 리스트
-    public List<Comment> getComments(){
-        return commentRepository.findAll();
     }
 
     // 상품 생성
