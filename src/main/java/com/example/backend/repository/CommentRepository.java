@@ -11,4 +11,7 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query(value = "SELECT * FROM comments WHERE product_code = :product_code", nativeQuery = true)
     List<Comment> CommentByProductCode(Long product_code);
+
+    @Query(value = "SELECT * FROM comments WHERE user_code = :user_code", nativeQuery = true)
+    List<Comment> CommentByUserCode(Long user_code);
 }
