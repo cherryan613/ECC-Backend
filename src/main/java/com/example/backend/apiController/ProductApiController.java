@@ -4,6 +4,7 @@ import com.example.backend.dto.ProductDetailDto;
 import com.example.backend.dto.ProductDto;
 import com.example.backend.dto.ProductTypeDto;
 import com.example.backend.dto.ResponseDto;
+import com.example.backend.service.CommentService;
 import com.example.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +18,15 @@ public class ProductApiController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private CommentService commentService;
 
     // 상품 상세 페이지
     @GetMapping("/api/products/{productCode}")
     public ResponseEntity<ResponseDto<?>> getProductByCode(@PathVariable Long productCode) {
         try {
-            List<ProductDetailDto> dtos = productService.productsByCode(productCode);
+            ProductDetailDto dtos = productService.productsByCode(productCode);
+            dtos.setCommentDtoList(commentService.commentsByProductCode(productCode));
             return ResponseEntity.ok(new ResponseDto<>("상품을 성공적으로 조회하였습니다.", dtos));
         } catch (Exception e) {
             ResponseDto<String> responseDto = new ResponseDto<>(e.getMessage(), null);
