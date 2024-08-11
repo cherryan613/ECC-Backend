@@ -23,7 +23,7 @@ public class Scrap {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long scrapCode;
 
-    @Column(name = "scrap_time")
+    @Column(name = "scrap_time", insertable = false, updatable = false)
     private LocalDateTime scrapTime;
 
     @Column(name="scrap_memo")
