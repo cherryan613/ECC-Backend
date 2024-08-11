@@ -20,7 +20,7 @@ public class CommentApiController {
     public ResponseEntity<ResponseDto<?>> comments(@PathVariable Long productCode) {
         try{
             // 서비스에 위임
-            List<CommentDto> dtos = commentService.comments(productCode);
+            List<CommentDto> dtos = commentService.commentsByProductCode(productCode);
             // 결과 응답
             return ResponseEntity.ok(new ResponseDto<>("댓글을 성공적으로 조회하였습니다.", dtos));
         } catch (Exception e) {
