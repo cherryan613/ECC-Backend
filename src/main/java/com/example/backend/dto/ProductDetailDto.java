@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor // 모든 필드를 매개변수로 갖는 생성자 자동 생성
 @NoArgsConstructor // 매개변수가 아예 없는 기본 생성자 자동 생성
@@ -27,6 +28,27 @@ public class ProductDetailDto { // 상품 상세 페이지(모든 정보)
     private String productUrl;
     private String productDescription;
     private LocalDateTime productLastUpdate;
+    private List<CommentDto> commentDtoList;
+
+    public ProductDetailDto(Long productCode, String productName, String productType,
+                      BigDecimal productInterestRate, BigDecimal productInterestTopRate,
+                      String productBank, String productAmount, String productAge,
+                      String productTerm, String productBenefit, String productUrl,
+                      String productDescription, LocalDateTime productLastUpdate) {
+        this.productCode = productCode;
+        this.productName = productName;
+        this.productType = productType;
+        this.productInterestRate = productInterestRate;
+        this.productInterestTopRate = productInterestTopRate;
+        this.productBank = productBank;
+        this.productAmount = productAmount;
+        this.productAge = productAge;
+        this.productTerm = productTerm;
+        this.productBenefit = productBenefit;
+        this.productUrl = productUrl;
+        this.productDescription = productDescription;
+        this.productLastUpdate = productLastUpdate;
+    }
 
     public static ProductDetailDto createProductDto(Product product){
         return new ProductDetailDto(
