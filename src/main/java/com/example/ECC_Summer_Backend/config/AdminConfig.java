@@ -1,7 +1,7 @@
 package com.example.ECC_Summer_Backend.config;
 
 import com.example.ECC_Summer_Backend.entity.User;
-import com.example.ECC_Summer_Backend.reopository.UserRepository;
+import com.example.ECC_Summer_Backend.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,9 +16,9 @@ public class AdminConfig {
             if(!userRepository.existsByUserId("admin")){
                 User admin= new User();
                 admin.setUserId("admin");
-                admin.setUserPw(new BCryptPasswordEncoder().encode("adminpassword"));
+                admin.setPassword(new BCryptPasswordEncoder().encode("adminpassword"));
                 admin.setUserName("Admin");
-                admin.setUserEmail("admin@example.com");
+                admin.setEmail("admin@example.com");
                 admin.setUserRole("ADMIN");
                 userRepository.save(admin);
             }

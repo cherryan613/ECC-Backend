@@ -4,7 +4,7 @@ import com.example.ECC_Summer_Backend.dto.LoginDto;
 import com.example.ECC_Summer_Backend.dto.UserDto;
 import com.example.ECC_Summer_Backend.entity.User;
 import com.example.ECC_Summer_Backend.jwt.JwtUtil;
-import com.example.ECC_Summer_Backend.reopository.UserRepository;
+import com.example.ECC_Summer_Backend.repository.UserRepository;
 import com.example.ECC_Summer_Backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,15 +48,19 @@ public class UserController {
             }
 
             // 이메일 유효성 검사 -> 올바른 이메일 형식인지 확인
-            if(!userService.isEmailValid(userDto.getUserEmail())){
+            if(!userService.isEmailValid(userDto.getEmail())){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효한 이메일 주소가 아닙니다.");
             }
 
             // 비밀번호 유효성 검사 -> 비밀번호 길이 제한
-            if(!userService.isPasswordValid(userDto.getUserPw())){
+            if(!userService.isPasswordValid(userDto.getPassword())){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 너무 깁니다.");
             }
 
+            // 비밀번호와 비밀번호 확인이 일치하는지 확인
+            if(!userDto.getPassword().equals(userDto.getPasswordConfirm())){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 일치하지 않습니다.");
+            }
             // 유효성 검사를 통과하면 사용자 등록을 시도한다.
             User registeredUser = userService.registerUser(userDto);
 
@@ -82,7 +86,7 @@ public class UserController {
             Optional<User> userOptional = userRepository.findByUserId(loginDto.getUserId());
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
-                if (bCryptPasswordEncoder.matches(loginDto.getUserPw(), user.getUserPw())) {
+                if (bCryptPasswordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
                     String token = jwtUtil.generateToken(user.getUserId(), user.getUserRole());
 
                     Map<String, String> response = new HashMap<>();

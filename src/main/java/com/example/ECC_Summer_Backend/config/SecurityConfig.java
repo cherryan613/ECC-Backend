@@ -4,6 +4,7 @@ import com.example.ECC_Summer_Backend.jwt.JwtRequestFilter;  // 올바르게 임
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Lazy;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled=true) // 메서드 보안 활성화
 public class SecurityConfig  {
 
     private final JwtRequestFilter jwtRequestFilter;
@@ -31,11 +33,9 @@ public class SecurityConfig  {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/user/**").hasRole("USER")
-                                .requestMatchers("/register", "/login").permitAll()
-                                .anyRequest().authenticated()
+                                authorizeRequests
+                                        .requestMatchers("/register", "/login").permitAll()
+                        // .anyRequest().authenticated() -> 그 외 모든 요청은 인증 필요
                 )
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )

@@ -3,7 +3,7 @@ package com.example.ECC_Summer_Backend.service;
 import com.example.ECC_Summer_Backend.dto.LoginDto;
 import com.example.ECC_Summer_Backend.dto.UserDto;
 import com.example.ECC_Summer_Backend.entity.User;
-import com.example.ECC_Summer_Backend.reopository.UserRepository;
+import com.example.ECC_Summer_Backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,11 +45,15 @@ public class UserService {
     // 사용자 등록
     public User registerUser(UserDto userDto){
         System.out.println("Registering user: " + userDto.getUserId());
+        // 비밀번호와 비밀번호 확인이 일치하는지 확인
+        if(!userDto.getPassword().equals(userDto.getPasswordConfirm())){
+            throw new IllegalArgumentException("Passwords do not match.");
+        }
         User newUser = new User();
         newUser.setUserId(userDto.getUserId());
-        newUser.setUserPw(bCryptPasswordEncoder.encode(userDto.getUserPw()));
+        newUser.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         newUser.setUserName(userDto.getUserName());
-        newUser.setUserEmail(userDto.getUserEmail());
+        newUser.setEmail(userDto.getEmail());
         newUser.setUserRole("USER"); // 기본적으로 USER 권한 부여
         // 데이터베이스에 사용자 정보 저장
         User savedUser = userRepository.save(newUser);
@@ -62,7 +66,7 @@ public class UserService {
         Optional<User> userOptional=userRepository.findByUserId(loginDto.getUserId());
         if(userOptional.isPresent()){
             User user = userOptional.get();
-            return bCryptPasswordEncoder.matches(loginDto.getUserPw(), user.getUserPw());
+            return bCryptPasswordEncoder.matches(loginDto.getPassword(), user.getPassword());
         }else{
             return false;
         }

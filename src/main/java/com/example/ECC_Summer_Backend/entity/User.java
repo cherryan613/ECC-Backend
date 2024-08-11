@@ -15,13 +15,13 @@ public class User {
     private String userId; // 아이디
 
     @Column(name="user_pw")
-    private String userPw; // 비밀번호
+    private String password; // 비밀번호
 
     @Column(name="user_name")
     private String userName; // 이름
 
     @Column(name="user_email")
-    private String userEmail; // 이메일
+    private String email; // 이메일
 
     @Column(name="user_role")
     private String userRole; // 권한 : USER, ADMIN
