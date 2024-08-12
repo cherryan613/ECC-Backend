@@ -6,6 +6,7 @@ import com.example.backend.service.ScrapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class ScrapApiController {
     ScrapService scrapService;
 
     // 유저에 대한 모든 스크랩
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/api/users/{userCode}/scraps")
     public ResponseEntity<ResponseDto<?>> scraps(@PathVariable Long userCode) {
         try {
@@ -31,6 +33,7 @@ public class ScrapApiController {
     }
 
     // 스크랩 저장
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/api/users/{userCode}/scraps")
     public ResponseEntity<ResponseDto<?>> save(@PathVariable Long userCode, @RequestBody ScrapDto dto) {
         try {
@@ -45,6 +48,7 @@ public class ScrapApiController {
     }
 
     // 스크랩 수정
+    @PreAuthorize("hasRole('USER')")
     @PatchMapping("/api/scraps/{scrapCode}")
     public ResponseEntity<ResponseDto<?>> update(@PathVariable Long scrapCode, @RequestBody ScrapDto dto) {
         try {
@@ -59,6 +63,7 @@ public class ScrapApiController {
     }
 
     // 스크랩 삭제
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/api/scraps/{scrapCode}")
     public ResponseEntity<ResponseDto<?>> delete(@PathVariable Long scrapCode) {
         try {

@@ -6,6 +6,7 @@ import com.example.backend.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class CommentApiController {
     }
 
     // 댓글 생성
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/api/products/{productCode}/comments")
     public ResponseEntity<ResponseDto<?>> create(@PathVariable Long productCode, @RequestBody CommentDto dto) {
         try {
@@ -44,6 +46,7 @@ public class CommentApiController {
     }
 
     // 댓글 수정
+    @PreAuthorize("hasRole('USER')")
     @PatchMapping("/api/comments/{commentCode}")
     public ResponseEntity<ResponseDto<?>> update(@PathVariable Long commentCode, @RequestBody CommentDto dto) {
         try {
@@ -58,6 +61,7 @@ public class CommentApiController {
     }
 
     // 댓글 삭제
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/api/comments/{commentCode}")
     public ResponseEntity<ResponseDto<?>> delete(@PathVariable Long commentCode) {
         try {
