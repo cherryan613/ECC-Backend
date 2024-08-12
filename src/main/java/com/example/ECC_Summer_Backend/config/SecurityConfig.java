@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Lazy;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true) // 메서드 보안 활성화
+@EnableGlobalMethodSecurity(prePostEnabled=true) // 메서드 보안 활성화 -> @PreAuthorize 사용 가능
 public class SecurityConfig  {
 
     private final JwtRequestFilter jwtRequestFilter;
@@ -32,13 +32,11 @@ public class SecurityConfig  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authorizeRequests ->
-                                authorizeRequests
-                                        .requestMatchers("/register", "/login").permitAll()
-                        // .anyRequest().authenticated() -> 그 외 모든 요청은 인증 필요
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .anyRequest().permitAll() // 모든 요청을 허용 -> 각 컨트롤러에서 권한 제어
+
                 )
-                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable()); // CSRF 비활성화
 
