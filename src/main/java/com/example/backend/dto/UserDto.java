@@ -24,8 +24,8 @@ public class UserDto {
                 user.getUserCode(),
                 user.getUserId(),
                 user.getUserName(),
-                user.getUserPw(),
-                user.getUserEmail()
+                user.getPassword(),
+                user.getEmail()
         );
     }
 }

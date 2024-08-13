@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, CrudRepository<User, Long> {
@@ -18,4 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long>, CrudRepositor
 
     @Override
     ArrayList<User> findAll();
+
+    boolean existsByUserId(String userId);
+    Optional<User> findByUserId(String userId);
+
 }
